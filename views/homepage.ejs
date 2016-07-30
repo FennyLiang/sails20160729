@@ -1,0 +1,32 @@
+<li ng-repeat="task in tasks">
+  {{task.title}}
+</li>
+
+<hr>
+<form>
+  <input type="text" ng-model="task" name="title" placeholder="請填入您的大名">
+  <input type="button" ng-click="submitHandler()" value="Submit">
+</form>
+
+<script>
+function taskController($scope) {
+  io.socket.on("connect", function () {
+    io.socket.get("/task", function (tasks) {
+      $scope.tasks = tasks;
+      $scope.$apply();
+    });
+  });
+}
+
+$scope.submitHandler = function() {
+  io.socket.post("/task", {
+    title: $scope.task
+  }, function (result) {
+    $scope.tasks.push(result);
+    $scope.$apply();
+  });
+};
+
+
+
+</script>
