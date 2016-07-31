@@ -35,16 +35,16 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  
+
   '/admin/user': {
     controller: 'UserController',
     action: 'page'
   },
-  
+
   'POST /admin/user/create': {
     controller: 'UserController',
     action: 'create'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *

@@ -1,3 +1,4 @@
+<h1></h1>
 <li ng-repeat="task in tasks">
   {{task.title}}
 </li>
@@ -9,24 +10,21 @@
 </form>
 
 <script>
-function taskController($scope) {
-  io.socket.on("connect", function () {
-    io.socket.get("/task", function (tasks) {
-      $scope.tasks = tasks;
-      $scope.$apply();
+  function taskController($scope) {
+    io.socket.on("connect", function () {
+      io.socket.get("/task", function (tasks) {
+        $scope.tasks = tasks;
+        $scope.$apply();
+      });
     });
-  });
-}
 
-$scope.submitHandler = function() {
-  io.socket.post("/task", {
-    title: $scope.task
-  }, function (result) {
-    $scope.tasks.push(result);
-    $scope.$apply();
-  });
-};
-
-
-
+    $scope.submitHandler = function() {
+      io.socket.post("/task", {
+        title: $scope.task
+      }, function (result) {
+        $scope.tasks.push(result);
+        $scope.$apply();
+      });
+    };
+  }
 </script>
